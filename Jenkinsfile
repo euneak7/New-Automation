@@ -34,8 +34,6 @@ pipeline {
                     allowEmptyResults: true
             )
         }
-
-
         success {
             echo 'Automation pipeline completed successfully.'
         }
@@ -46,3 +44,4 @@ pipeline {
         }
     }
 }
+
