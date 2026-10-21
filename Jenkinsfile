@@ -2,12 +2,14 @@
 pipeline {
     agent any
 
+
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
+
 
         stage('Check Java and Maven') {
             steps {
@@ -16,27 +18,31 @@ pipeline {
             }
         }
 
+
         stage('Build and Test') {
             steps {
-                sh 'mvn clean test'
+                sh 'mvn -B -e clean test'
             }
         }
     }
 
+
     post {
         always {
             junit(
-                    testResults: '**/target/surefire-reports/*.xml',
+                    testResults: '**/target/surefire-reports/TEST-*.xml',
                     allowEmptyResults: true
             )
         }
+
 
         success {
             echo 'Automation pipeline completed successfully.'
         }
 
+
         failure {
-            echo 'Pipeline failed. Check Console Output.'
+            echo 'Pipeline failed. Check Maven errors above.'
         }
     }
 }
